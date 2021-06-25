@@ -213,9 +213,9 @@ Orderer: &OrdererDefaults
     # to include the OrdererEndpoints item in your org definition
     Addresses:
         - orderer.example.com:7050
-        - orderer2.example.com:7060
-        - orderer3.example.com:7070
-        - orderer4.example.com:7080
+        - orderer2.example.com:7050
+        - orderer3.example.com:7050
+        - orderer4.example.com:7050
 
 
     MirBFT:
@@ -225,15 +225,15 @@ Orderer: &OrdererDefaults
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
         - Host: orderer2.example.com
-          Port: 7060
+          Port: 7050
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
         - Host: orderer3.example.com
-          Port: 7070
+          Port: 7050
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
         - Host: orderer4.example.com
-          Port: 7080
+          Port: 7050
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
 
