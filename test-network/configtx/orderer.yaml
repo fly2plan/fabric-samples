@@ -12,6 +12,9 @@
 #
 ################################################################################
 General:
+    # Type: The type of the orderer.
+    Type: hlmirbft
+
     # Listen address: The IP on which to bind to listen.
     ListenAddress: 127.0.0.1
 
@@ -420,5 +423,5 @@ Consensus:
 
     # SnapDir specifies the location at which snapshots for etcd/raft are
     # stored. Each channel will have its own subdir named after channel ID.
-    ReqStoreDir: /var/hyperledger/production/orderer/hlmirbft/reqstore
+    #ReqStoreDir: /var/hyperledger/production/orderer/hlmirbft/reqstore
 
