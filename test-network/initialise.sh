@@ -8,8 +8,8 @@ elif [ "$1" == "up" ]; then
     export PATH=${PWD}/../bin:$PATH
     export FABRIC_CFG_PATH=${PWD}/configtx
     export FABRIC_CFG_PATH=${PWD}/configtx
-    configtxgen --help
     configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/channel1.block -channelID channel1
+    #Adding orderers to channel
     for i in {1..4}; do
         if [ "$i" == "1" ]; then
             echo -n "${i}st"
@@ -31,6 +31,7 @@ elif [ "$1" == "up" ]; then
         osnadmin channel join --channelID channel1 --config-block ./channel-artifacts/channel1.block -o localhost:70$((i + 4))3 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
     done
     offset=0
+    #Adding peers to channel
     for i in {1..2}; do
         echo -n "Org"
         if [ "$i" == "2" ]; then
