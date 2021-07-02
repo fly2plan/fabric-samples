@@ -29,6 +29,3 @@ OrdererOrgs:
       - Hostname: orderer4
         SANS:
           - localhost
-      - Hostname: cluster
-        SANS:
-          - localhost
