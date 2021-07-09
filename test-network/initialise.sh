@@ -7,7 +7,6 @@ if [ "$1" == "down" ]; then
 elif [ "$1" == "up" ]; then
     export PATH=${PWD}/../bin:$PATH
     export FABRIC_CFG_PATH=${PWD}/configtx
-    export FABRIC_CFG_PATH=${PWD}/configtx
     configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/channel1.block -channelID channel1
     #Adding orderers to channel
     for i in {1..4}; do
