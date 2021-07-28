@@ -53,6 +53,7 @@ elif [ "$1" == "up" ]; then
     export CORE_PEER_ADDRESS=localhost:7051
     sleep 10
     peer channel fetch config channel-artifacts/config_block.pb -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com -c channel1 --tls --cafile "$ORDERER_CA"
+    sleep 10
     cd channel-artifacts
     configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
     jq '.data.data[0].payload.data.config' config_block.json > config.json
@@ -66,6 +67,7 @@ elif [ "$1" == "up" ]; then
     configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output config_update_in_envelope.pb
     cd ..
     peer channel update -f channel-artifacts/config_update_in_envelope.pb -c channel1 -o localhost:7050  --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+    sleep 10
     #Setting the 2nd anchor peer
     export CORE_PEER_LOCALMSPID="Org2MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
@@ -85,6 +87,7 @@ elif [ "$1" == "up" ]; then
     configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output config_update_in_envelope.pb
     cd ..
     peer channel update -f channel-artifacts/config_update_in_envelope.pb -c channel1 -o localhost:7050  --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+    sleep 10
     #Confirm that the channel has been updated (block height should now be 3)
     peer channel getinfo -c channel1
     #Connecting to 1st orderer as Org1 peer so change environment variables
@@ -102,5 +105,6 @@ elif [ "$1" == "up" ]; then
     echo "Invoking chaincode"
     peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" -C channel1 -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"InitLedger","Args":[]}'
     echo "Confirm the assets were added to the ledger"
+    sleep 10
     peer chaincode query -C channel1 -n basic -c '{"Args":["getAllAssets"]}'
 fi
