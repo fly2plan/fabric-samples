@@ -107,4 +107,6 @@ elif [ "$1" == "up" ]; then
     echo "Confirm the assets were added to the ledger"
     sleep 10
     peer chaincode query -C channel1 -n basic -c '{"Args":["getAllAssets"]}'
+    echo "Check to see if blocks (that were written due to addition of anchor peers and chaincode) were written correctly (block height should be 7)"
+    peer channel getinfo -c channel1
 fi
