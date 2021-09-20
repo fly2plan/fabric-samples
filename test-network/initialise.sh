@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #A script that executes the commands to initialise the test network (https://hyperledger-fabric.readthedocs.io/en/latest/create_channel/create_channel_test_net.html)
-./network.sh $1
+./network.sh $1 $2
 if [ "$1" == "down" ]; then
     exit 0
 elif [ "$1" == "up" ]; then
@@ -88,8 +88,6 @@ elif [ "$1" == "up" ]; then
     cd ..
     peer channel update -f channel-artifacts/config_update_in_envelope.pb -c channel1 -o localhost:7050  --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
     sleep 10
-    #Confirm that the channel has been updated (block height should now be 3)
-    peer channel getinfo -c channel1
     #Connecting to 1st orderer as Org1 peer so change environment variables
     export CORE_PEER_LOCALMSPID="Org1MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
@@ -109,4 +107,12 @@ elif [ "$1" == "up" ]; then
     peer chaincode query -C channel1 -n basic -c '{"Args":["getAllAssets"]}'
     echo "Check to see if blocks (that were written due to addition of anchor peers and chaincode) were written correctly (block height should be 7)"
     peer channel getinfo -c channel1
+#    echo "Invoke smart contract 200 times a second"
+#    while :
+#    do
+#      sleep 0.005
+#      peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" -C channel1 -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"UpdateAsset","Args":["asset3","green","10","Jin Soo","200"]}'
+#      peer channel getinfo -c channel1
+#    done
+
 fi
