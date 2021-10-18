@@ -1,0 +1,35 @@
+---
+name: test-network-ordererOrg
+version: 1.0.0
+client:
+  organization: OrdererOrg
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  OrdererOrg:
+    mspid: OrdererMSP
+    peers:
+    - peer0.orderer.example.com
+    certificateAuthorities:
+    - ca.example.com
+peers:
+  peer0.org${ORG}.example.com:
+    url: grpcs://localhost:11051
+    tlsCACerts:
+      pem: |
+          ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer0.orderer.example.com
+      hostnameOverride: peer0.orderer.example.com
+certificateAuthorities:
+  ca.example.com:
+    url: https://localhost:11051
+    caName: OrdererCA
+    tlsCACerts:
+      pem:
+        - |
+          ${CAPEM}
+    httpOptions:
+      verify: false
