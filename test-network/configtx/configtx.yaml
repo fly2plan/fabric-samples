@@ -238,6 +238,23 @@ Orderer: &OrdererDefaults
           Port: 7050
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
+        Options:
+            HeartbeatTicks: 2
+            SuspectTicks: 10
+            NewEpochTimeoutTicks: 30
+            BufferSize: 5242880 #5MB
+            NumberOfBuckets: 4
+            CheckpointInterval: 20
+            MaxEpochLength: 200
+            NodeStatuses: # One entry for each consenter
+            - Loyalty: 1000
+              Timeout: 0
+            - Loyalty: 1000
+              Timeout: 0
+            - Loyalty: 1000
+              Timeout: 0
+            - Loyalty: 1000
+              Timeout: 0
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
